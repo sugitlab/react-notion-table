@@ -1,11 +1,16 @@
-import React from "react";
+import React from 'react'
+import BaseTable from './BaseTable'
 
 export interface ReactNotionTableProps {
   name: string;
 }
 
 const ReactNotionTable = (props: ReactNotionTableProps) => {
-  return <div>My name is {props.name}</div>;
+  return (
+    <div>
+      <BaseTable />
+    </div>
+  )
 }
 
 export default ReactNotionTable;
