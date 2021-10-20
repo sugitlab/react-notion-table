@@ -27,7 +27,7 @@
     "url": "https://github.com/sugitlab/react-notion-table/issues"
   },
   "homepage": "https://github.com/sugitlab/react-notion-table#readme",
-  "peerDependencies": {
+  "dependencies": {
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
     "@types/react-table": "^7.7.6",
