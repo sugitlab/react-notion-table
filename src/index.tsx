@@ -13,11 +13,11 @@ const ReactNotionTable = (props: ReactNotionTableProps) => {
   const columns: Column<Data>[] = React.useMemo(
     () => [
       {
-        Header: "Column 1",
+        label: "Column 1",
         accessor: "col1",
       },
       {
-        Header: "Column 2",
+        label: "Column 2",
         accessor: "col2",
       },
     ],

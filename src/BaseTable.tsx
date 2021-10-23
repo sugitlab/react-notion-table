@@ -7,6 +7,7 @@ import {
   Column,
 } from "react-table";
 import { Data } from "./makeData";
+import Header from './Header';
 
 export interface BaseTableProps {
   columns: Column<Data>[];
@@ -19,7 +20,8 @@ const Styles = styled.div`
   .table {
     display: inline-block;
     border-spacing: 0;
-    border: 1px solid black;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
 
     .tr {
       :last-child {
@@ -29,12 +31,12 @@ const Styles = styled.div`
       }
     }
 
-    .th,
     .td {
       margin: 0;
       padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
+      text-overflow: ellipsis;
+      border-bottom: 1px solid #e0e0e0;
+      border-right: 1px solid #e0e0e0;
 
       ${
         "" /* In this example we use an absolutely position resizer,
@@ -45,11 +47,30 @@ const Styles = styled.div`
       :last-child {
         border-right: 0;
       }
+    }
+
+    .th {
+      color: #9e9e9e;
+      font-weight: 500;
+      font-size: 0.875rem;
+      text-align: left;
+      cursor: pointer;
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      border-right: 1px solid #e0e0e0;
+
+      &:hover {
+        background: #f5f5f5;
+      }
+
+      :last-child {
+        border-right: 0;
+      }
 
       .resizer {
         display: inline-block;
-        background: blue;
-        width: 10px;
+        width: 5px;
         height: 100%;
         position: absolute;
         right: 0;
@@ -59,8 +80,8 @@ const Styles = styled.div`
         ${"" /* prevents from scrolling while dragging on touch devices */}
         touch-action:none;
 
-        &.isResizing {
-          background: red;
+        &:hover {
+          background: rgba(46, 170, 220, 0.8);
         }
       }
     }
@@ -73,6 +94,7 @@ const BaseTable = (props: BaseTableProps) => {
       minWidth: 30,
       width: 150,
       maxWidth: 400,
+      Header: Header,
     }),
     []
   );
@@ -84,7 +106,6 @@ const BaseTable = (props: BaseTableProps) => {
     rows,
     prepareRow,
     state,
-    resetResizing,
   } = useTable<Data>(
     { columns: props.columns, data: props.data, defaultColumn: defaultColumn },
     useBlockLayout,
@@ -93,23 +114,18 @@ const BaseTable = (props: BaseTableProps) => {
 
   return (
     <Styles>
-      <button onClick={resetResizing}> reset </button>
       <div>
         <table {...getTableProps()} className="table">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className="tr">
-                {headerGroup.headers.map((col) => (
+                {headerGroup.headers.map((col) => col.render("Header"))}
+                  {/*
                   <th {...col.getHeaderProps()} className="th">
                     {col.render("Header")}
-                    <div
-                      {...col.getResizerProps()}
-                      className={`resizer ${
-                        col.isResizing ? "isResizing" : ""
-                      }`}
-                    />
+                    <div {...col.getResizerProps()} className="resizer" />
                   </th>
-                ))}
+                  */}
               </tr>
             ))}
           </thead>
